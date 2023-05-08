@@ -1,0 +1,20 @@
+body{
+    background-color: #212529;
+    
+}
+header {
+    background-color: red;
+    background-image: linear-gradient(to top right, yellow, red);
+    height: 100px;
+    text-align: center;
+}
+
+.sidebar {
+    background-color: navy;
+    height: auto;
+}
+
+#searchBar {
+    background-color: red !important;
+    background-image: linear-gradient(to top right, yellow, red) !important;
+}
