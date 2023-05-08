@@ -25,6 +25,9 @@ function searchSubmit (event){
     
 
 };
+function createCard(){
+
+}
 searching.on("click", searchSubmit);
 console.log(city);
 console.log(requestURL);
