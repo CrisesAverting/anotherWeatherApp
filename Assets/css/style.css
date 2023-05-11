@@ -8,7 +8,10 @@ header {
     height: 100px;
     text-align: center;
 }
-
+.card {
+    background-image: linear-gradient(to bottom left, blue, lightblue);
+    min-width: 100px;
+}
 .sidebar {
     background-color: navy;
     height: auto;
@@ -17,4 +20,7 @@ header {
 #searchBar {
     background-color: red !important;
     background-image: linear-gradient(to top right, yellow, red) !important;
+}
+#city-input{
+    width: 140px;
 }

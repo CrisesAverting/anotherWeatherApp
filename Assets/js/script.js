@@ -1,34 +1,92 @@
 var searchEl = $('#city-input');
 var searching = $('#search');
-var city = 'Boston' ;
+var todaysEl = $('#todaysWeather');
+var forecastEl = $('#forecastContainer');
+var city = '';
 let units = 'imperial';
-const apiKey = "3844c5bd7e6c5d634485a1c3050b8f72&"
-const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?';
+var rForecast;
+var rWeather;
+const apiKey = "3844c5bd7e6c5d634485a1c3050b8f72";
+const apiUrl = 'https://api.openweathermap.org/data/2.5/';
+//5 day forecast
+var fore = 'forecast?'
+//current weather
+var weat = 'weather?'
 // var requestURL = ''
-var requestURL = apiUrl + 'q=' + city + '&appid=' + apiKey + units
+var forecastRequestURL = apiUrl + fore + 'q=' + city + '&units=' + units + '&appid=' + apiKey
+var weatRequestURL = apiUrl + weat + 'q=' + city + '&units=' + units + '&appid=' + apiKey
 // console.log(requestURL)
 //on button press
-function searchSubmit (event){
+function searchSubmit(event) {
     event.preventDefault();
+    forecastEl.html("");
     city = $("#city-input").val();
-    console.log(city)
-    requestURL = apiUrl + 'q=' + city + '&appid=' + apiKey + units;
-    fetch(requestURL)
-        .then(function (response) {
-            return response.json();
+    // console.log(city)
+    //todays weather forecast
+    weatRequestURL = apiUrl + weat + 'q=' + city + '&units=' + units + '&appid=' + apiKey;
+    console.log(weatRequestURL);
+    fetch(weatRequestURL)
+        .then(function (response2) {
+            return response2.json();
         })
-        .then(function (data) {
-            console.log(data)
-            
-        })
-    
-    
+        .then(function (data2) {
+            //addtional function creation stuff
+            rWeather = data2;
+            rWeather.
+            dayTitle = $('<div>');
+            todays = $("<div>");
+            todays.addClass('col-12 col-md-6 col-lg-2 card');
+            todaysEl.append(todays);
+            todaysTemp = rWeather.main.temp
+            todaysHumitdy = rWeather.main.humidity
+            todaysWind = rWeather.wind.speed
 
+        })
+
+    forecastRequestURL = apiUrl + fore + 'q=' + city + '&units=' + units + '&appid=' + apiKey;
+    fetch(forecastRequestURL)
+        .then(function (response1) {
+            return response1.json();
+        })
+        .then(function (data1) {
+            // 5 day forecast fetch functional stuff
+            console.log(data1)
+            rForecast = data1;
+            var i =0
+            for (let x = 0; x < 5; x++) {   
+                createCard(x,i)
+                i+=8
+            }
+        })
 };
-function createCard(){
+function createCard(x,i) {
+    //add container div
+    var cur = $('#day '+x);
+    var titl = "day" + x;
+    var containerEl = $('<div>');
+    containerEl.addClass('col-12 col-md-6 col-lg-2 card');
+     //add card class and dayID from x
+    containerEl.attr('id', titl);
+    forecastEl.append(containerEl);
+    var Dte = $('<h4>');
+    var temperature = $('<h4>');
+    var Humid = $('<h4>');
+    var windy = $('<h4>');
+    var iconic = $('<h4>');
+    tdt = new Date(rForecast.list[i].dt * 1000).toLocaleDateString("en-US")
+     temperature.text = rForecast.list[i].main.temp;
+     Humid.text(rForecast.list[i].main.humidity);
+    windy.text(rForecast.list[i].wind.speed);
+     Dte.text (tdt);
+    //  iconic.text(rForecast.list[i].main.)
+     containerEl.append(Dte, temperature, Humid, windy);
+
 
 }
+
+
 searching.on("click", searchSubmit);
 console.log(city);
-console.log(requestURL);
+// console.log(forecastRequestURL);
+// console.log(weatRequestURL);
 
