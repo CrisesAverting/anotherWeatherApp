@@ -8,6 +8,9 @@ header {
     height: 100px;
     text-align: center;
 }
+li{
+    list-style-type: none
+}
 .card {
     background-image: linear-gradient(to bottom left, blue, lightblue);
     min-width: 100px;

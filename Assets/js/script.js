@@ -21,17 +21,24 @@ var weatRequestURL = apiUrl + weat + 'q=' + city + '&units=' + units + '&appid='
 function searchSubmit(event) {
     event.preventDefault();
     forecastEl.html("");
+    todaysEl.html("");
     city = $("#city-input").val();
     // console.log(city)
-    previous = $('prevSearch')
-    searchedBtn = $('<button>')
-    searchedBtn.text(city)
-    searchedBtn.addClass('searched')
-    searchedBtn.attr('id', )
-    // searchedBtn.on('click', '.searched')
-        //todays weather forecast
-        weatRequestURL = apiUrl + weat + 'q=' + city + '&units=' + units + '&appid=' + apiKey;
-    console.log(weatRequestURL);
+    var previous = $('#prevSearch')
+    var curCity = $('<li>')
+    curCity.text(city);
+    console.log(curCity)
+    // curCity.on("click", searchSubmit)
+    // if (curCity.textContent === city) {
+    //     console.log("Already Searched")
+    //     console.log(curCity[0].textContent)
+    //     console.log(city)
+    // }
+    previous.append(curCity)
+
+    //todays weather forecast
+    weatRequestURL = apiUrl + weat + 'q=' + city + '&units=' + units + '&appid=' + apiKey;
+    // console.log(weatRequestURL);
     fetch(weatRequestURL)
         .then(function (response2) {
             return response2.json();
@@ -39,9 +46,9 @@ function searchSubmit(event) {
         .then(function (data2) {
             //addtional function creation stuff
             rWeather = data2;
-            console.log(rWeather)
-            curIcon = iconurl + rWeather.weather[0].icon+"@2x.png"
-            console.log(curIcon);
+            // console.log(rWeather)
+            curIcon = iconurl + rWeather.weather[0].icon + "@2x.png"
+            // console.log(curIcon);
             dayTitle = $('<div>');
             dayTitle.text("Today's Weather");
             todaysTemp = $("<div>");
@@ -50,11 +57,11 @@ function searchSubmit(event) {
             todaysIcon = $('<img>')
             todaysIcon.attr('src', curIcon)
             todaysEl.addClass('col-12 col-md-6 col-lg-2 card');
-            todaysTemp.text("Temp: "+ rWeather.main.temp + " F")
-            todaysHumitdy.text("Humidity: "+rWeather.main.humidity)
-            todaysWind.text("Wind: "+rWeather.wind.speed +" mph")
+            todaysTemp.text("Temp: " + rWeather.main.temp + " F")
+            todaysHumitdy.text("Humidity: " + rWeather.main.humidity)
+            todaysWind.text("Wind: " + rWeather.wind.speed + " mph")
             todaysEl.append(dayTitle, todaysTemp, todaysHumitdy, todaysWind, todaysIcon);
-        })  
+        })
 
     forecastRequestURL = apiUrl + fore + 'q=' + city + '&units=' + units + '&appid=' + apiKey;
     fetch(forecastRequestURL)
@@ -63,9 +70,13 @@ function searchSubmit(event) {
         })
         .then(function (data1) {
             // 5 day forecast fetch functional stuff
-            console.log(data1)
+            // console.log(data1)
             rForecast = data1;
             var i = 0
+            var forecastTitle = $('<h3>');
+            forecastTitle.addClass('col-12 col-md-6 col-lg-2 card');
+            forecastTitle.text(city + " \n 5 Day forecast");
+            forecastEl.append(forecastTitle)
             for (let x = 0; x < 5; x++) {
                 createCard(x, i)
                 i += 8
@@ -82,18 +93,18 @@ function createCard(x, i) {
     containerEl.attr('id', titl);
     forecastEl.append(containerEl);
     var Dte = $('<h4>');
-    var temperature = $('<h4>');
-    var Humid = $('<h4>');
-    var windy = $('<h4>');
+    var temperature = $('<h5>');
+    var Humid = $('<h5>');
+    var windy = $('<h5>');
     var iconic = $('<img>');
-    foreIcon = iconurl + rForecast.list[i].weather[0].icon+"@2x.png";
+    foreIcon = iconurl + rForecast.list[i].weather[0].icon + "@2x.png";
     iconic.attr('src', foreIcon)
     tdt = new Date(rForecast.list[i].dt * 1000).toLocaleDateString("en-US")
-    temperature.text(rForecast.list[i].main.temp);
-    Humid.text(rForecast.list[i].main.humidity);
-    windy.text(rForecast.list[i].wind.speed);
+    temperature.text("Temp: "+rForecast.list[i].main.temp + " F");
+    Humid.text("Humitiy: "+rForecast.list[i].main.humidity);
+    windy.text(rForecast.list[i].wind.speed+"mph");
     Dte.text(tdt);
-    
+
     // iconic.attr('src','curicon')
 
     //  iconic.text(rForecast.list[i].main.)
@@ -104,7 +115,7 @@ function createCard(x, i) {
 
 
 searching.on("click", searchSubmit);
-console.log(city);
+// console.log(city);
 // console.log(forecastRequestURL);
 // console.log(weatRequestURL);
 
