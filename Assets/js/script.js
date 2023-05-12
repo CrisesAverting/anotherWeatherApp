@@ -86,7 +86,7 @@ function createCard(x, i) {
     var Humid = $('<h4>');
     var windy = $('<h4>');
     var iconic = $('<img>');
-    foreIcon = iconurl + rForecast.list[i].weather[0.icon]+"@2x.png";
+    foreIcon = iconurl + rForecast.list[i].weather[0].icon+"@2x.png";
     iconic.attr('src', foreIcon)
     tdt = new Date(rForecast.list[i].dt * 1000).toLocaleDateString("en-US")
     temperature.text(rForecast.list[i].main.temp);
@@ -97,7 +97,7 @@ function createCard(x, i) {
     // iconic.attr('src','curicon')
 
     //  iconic.text(rForecast.list[i].main.)
-    containerEl.append(Dte, temperature, Humid, windy);
+    containerEl.append(Dte, temperature, Humid, windy, iconic);
 
 
 }
