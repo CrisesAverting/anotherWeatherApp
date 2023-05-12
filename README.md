@@ -22,7 +22,7 @@ An app that provides basic weather forcasting features
 
 ## Screenshots
 
-TODO insert screenshots of deployed app
+<img src="./assets/images/weatherApp.png">
 
 ## Technologies
 
